@@ -1,0 +1,44 @@
+name: Publish DocC
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Build DocC archive
+        run: xcodebuild docbuild -scheme BetaCalendarsPaperKit -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/docc"
+      - name: Transform DocC archive for GitHub Pages
+        run: |
+          archive=$(find "$RUNNER_TEMP/docc/Build/Products" -name 'BetaCalendarsPaperKit.doccarchive' -print -quit)
+          test -n "$archive"
+          xcrun docc process-archive transform-for-static-hosting "$archive" \
+            --hosting-base-path betacalendars-paperkit \
+            --output-path "$RUNNER_TEMP/site"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/site
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

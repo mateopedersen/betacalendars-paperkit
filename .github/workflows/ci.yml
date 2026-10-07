@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['0.*']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  swift-package:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show Apple toolchain
+        run: |
+          swift --version
+          xcodebuild -version
+      - name: Build Swift package
+        run: swift build
+      - name: Run XCTest suite
+        run: swift test
+      - name: Build iOS simulator package targets
+        run: xcodebuild build -scheme BetaCalendarsPaperKit -destination 'generic/platform=iOS Simulator'
+      - name: Run XCTest through Xcode on macOS
+        run: xcodebuild test -scheme BetaCalendarsPaperKit -destination 'platform=macOS'
+      - name: Audit canonical references and tracking parameters
+        run: python3 scripts/audit-references.py
+      - name: Build DocC archive
+        run: xcodebuild docbuild -scheme BetaCalendarsPaperKit -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/docc"
+
+  cocoapods-lint:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install CocoaPods
+        run: gem install cocoapods -v 1.17.0 --no-document
+      - name: Lint default static-library integration
+        run: pod lib lint BetaCalendarsPaperKit.podspec --verbose --platforms=ios,macos
+      - name: Lint static-framework integration
+        run: pod lib lint BetaCalendarsPaperKit.podspec --verbose --platforms=ios,macos --use-static-frameworks
+      - name: Lint tagged external specification
+        if: startsWith(github.ref, 'refs/tags/')
+        run: pod spec lint BetaCalendarsPaperKit.podspec --verbose --platforms=ios,macos
