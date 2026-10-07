@@ -25,7 +25,7 @@ jobs:
       - name: Build iOS simulator package targets
         run: xcodebuild build -scheme BetaCalendarsPaperKit -destination 'generic/platform=iOS Simulator'
       - name: Run XCTest through Xcode on macOS
-        run: xcodebuild test -scheme BetaCalendarsPaperKit -destination 'platform=macOS'
+        run: xcodebuild test -scheme BetaCalendarsPaperKit-Package -destination 'platform=macOS'
       - name: Audit canonical references and tracking parameters
         run: python3 scripts/audit-references.py
       - name: Build DocC archive
