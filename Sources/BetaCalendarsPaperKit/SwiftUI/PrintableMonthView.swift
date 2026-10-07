@@ -1,7 +1,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
-public struct CalendarSheetStyle {
+public struct CalendarSheetStyle: Sendable {
     public var textColor: Color
     public var adjacentDayColor: Color
     public var weekendColor: Color

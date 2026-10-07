@@ -49,6 +49,10 @@ public struct CivilMonth: Sendable, Hashable, Codable, Comparable, CustomStringC
         month == 12 ? CivilMonth(year: year + 1, month: 1) : CivilMonth(year: year, month: month + 1)
     }
 
+    public static func < (lhs: CivilMonth, rhs: CivilMonth) -> Bool {
+        (lhs.year, lhs.month) < (rhs.year, rhs.month)
+    }
+
     public var description: String { "\(year)-\(String(format: "%02d", month))" }
 
     /// English month names keep the core deterministic; localized names can be supplied by a UI.
