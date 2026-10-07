@@ -196,7 +196,9 @@ public struct MonthGrid: Sendable, Hashable, Codable {
                 if relative < 1 {
                     relation = .previousMonth
                     let adjacentDay = previousDays + relative
-                    date = adjacentDay > 0 ? CivilDate(month: previousMonth!, day: adjacentDay) : nil
+                    date = adjacentDayPolicy == .included && adjacentDay > 0
+                        ? previousMonth.flatMap { CivilDate(month: $0, day: adjacentDay) }
+                        : nil
                     day = adjacentDayPolicy == .hidden || previousMonth == nil || adjacentDay < 1 ? nil : adjacentDay
                 } else if relative > month.daysInMonth {
                     relation = .nextMonth
