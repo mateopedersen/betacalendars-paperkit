@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'BetaCalendarsPaperKit'
-  s.version = '0.1.0'
+  s.version = '0.1.1'
   s.summary = 'Deterministic Swift toolkit for printable calendar grids and paper layout geometry.'
   s.description = <<-DESC
     A timezone-independent Gregorian month-grid engine with printable paper
@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
   s.homepage = 'https://www.betacalendars.com/'
   s.documentation_url = 'https://mateopedersen.github.io/betacalendars-paperkit/documentation/betacalendarspaperkit/'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
-  s.author = 'mateopedersen'
+  s.author = 'Mateo Pedersen'
   s.source = { :git => 'https://github.com/mateopedersen/betacalendars-paperkit.git', :tag => s.version.to_s }
-  s.readme = 'https://github.com/mateopedersen/betacalendars-paperkit/blob/0.1.0/README.md'
-  s.changelog = 'https://github.com/mateopedersen/betacalendars-paperkit/blob/0.1.0/CHANGELOG.md'
+  s.readme = 'https://raw.githubusercontent.com/mateopedersen/betacalendars-paperkit/0.1.1/README.md'
+  s.changelog = 'https://raw.githubusercontent.com/mateopedersen/betacalendars-paperkit/0.1.1/CHANGELOG.md'
   s.module_name = 'BetaCalendarsPaperKit'
   s.swift_versions = ['5.9', '6.0']
   s.ios.deployment_target = '15.0'

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- Correct CocoaPods README and changelog links to serve raw Markdown.
+- Display the verified maintainer name on the CocoaPods listing.
+
 ## 0.1.0
 
 - Add timezone-independent Gregorian civil month and month-grid models.

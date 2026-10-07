@@ -21,7 +21,7 @@
 Add `https://github.com/mateopedersen/betacalendars-paperkit` in Xcode's **Add Package Dependencies** flow, or declare it in `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/mateopedersen/betacalendars-paperkit.git", from: "0.1.0")
+.package(url: "https://github.com/mateopedersen/betacalendars-paperkit.git", from: "0.1.1")
 ```
 
 Then add `BetaCalendarsPaperKit` to the target dependencies.
